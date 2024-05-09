@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bfe5d829-a0fc-481d-8999-77d1f8cefdfd" name="Changes" comment="reorder methods">
-      <change afterPath="$PROJECT_DIR$/States/Candidate.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/States/Follower.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/States/Leader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/States/__init__.py" afterDir="false" />
+    <list default="true" id="bfe5d829-a0fc-481d-8999-77d1f8cefdfd" name="Changes" comment="sync server.py with state classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/States/Leader.py" beforeDir="false" afterPath="$PROJECT_DIR$/States/Leader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ThreadingWithKill.py" beforeDir="false" afterPath="$PROJECT_DIR$/ThreadingWithKill.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/candidate.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/candidate.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +65,7 @@
       <recent name="F:\term6\os\raft\messages" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.candidate">
+  <component name="RunManager" selected="Python.ThreadingWithKill">
     <configuration name="ThreadingWithKill" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="raft" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -182,8 +178,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.candidate" />
         <item itemvalue="Python.ThreadingWithKill" />
+        <item itemvalue="Python.candidate" />
         <item itemvalue="Python.candidate copy" />
         <item itemvalue="Python.sever_message" />
         <item itemvalue="Python.test (1)" />
@@ -235,7 +231,7 @@
       <workItem from="1715193728679" duration="67000" />
       <workItem from="1715193820158" duration="68000" />
       <workItem from="1715193900616" duration="12593000" />
-      <workItem from="1715243226204" duration="33755000" />
+      <workItem from="1715243226204" duration="36252000" />
     </task>
     <task id="LOCAL-00001" summary="commited">
       <created>1715171962149</created>
@@ -328,7 +324,21 @@
       <option name="project" value="LOCAL" />
       <updated>1715272913775</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add state classes">
+      <created>1715282989387</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1715282989387</updated>
+    </task>
+    <task id="LOCAL-00015" summary="sync server.py with state classes">
+      <created>1715283029794</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1715283029794</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -352,12 +362,14 @@
     <MESSAGE value="add _candidate, _follower and _stateWorker" />
     <MESSAGE value="test election" />
     <MESSAGE value="reorder methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="reorder methods" />
+    <MESSAGE value="add state classes" />
+    <MESSAGE value="sync server.py with state classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="sync server.py with state classes" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/raft$message.coverage" NAME="message Coverage Results" MODIFIED="1715248783444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/raft$server.coverage" NAME="server Coverage Results" MODIFIED="1715200754274" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/raft$ThreadingWithKill.coverage" NAME="ThreadingWithKill Coverage Results" MODIFIED="1715276592884" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/raft$ThreadingWithKill.coverage" NAME="ThreadingWithKill Coverage Results" MODIFIED="1715283799187" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/raft$test.coverage" NAME="test Coverage Results" MODIFIED="1715248552501" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/raft$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1715256767708" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/raft$state.coverage" NAME="state Coverage Results" MODIFIED="1715195450989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

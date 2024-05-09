@@ -48,13 +48,14 @@ class ThreadWithKill(threading.Thread):
 #
 #
 #
-#
+# #
 # class follower(threading.Thread):
 #     def run(self):
 #
 #         for i in range (10):
 #             time.sleep(1)
 #             print("runnning")
+#             self.fuck()
 #
 #     def fuck(self):
 #
@@ -73,10 +74,10 @@ class ThreadWithKill(threading.Thread):
 #
 # # t1.start()
 # # t2.start()
+# publisht = follower()
 #
 # publisht.run()
-# publisht.fuck()
-#
+# # publisht.fuck()
 #
 # # t1.kill()
 #
@@ -84,7 +85,7 @@ class ThreadWithKill(threading.Thread):
 #     i += 1
 #     i *= 2
 # t2.kill()
-#
-#
+
+
 
 

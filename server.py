@@ -48,6 +48,18 @@ class Server(object):
 
 
 
+    def _heartbeatHandler(self):
+        threading.Thread(target=self._heartbeat).start()
+
+
+    def _heartbeat(self):
+        while self._currentState == self.LEADER:
+            time.sleep(1)
+            for n in self._neighbors:
+                self._leader._replicateLog(leaderId=self._id, followerId=n['id'])
+
+
+
 
         # self._mainWorkerThread = self._stateWorker()
         # self._newWorkerThread = None

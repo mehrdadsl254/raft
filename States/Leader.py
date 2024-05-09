@@ -10,7 +10,11 @@ class Leader(threading.Thread):
         self.server = server
 
     def start(self):
+        self.server._heartbeatHandler()
+
+    def _replicateLog(self,leaderId, followerId):
         pass
+
 
     def _onMessage(self, message):
         if message.type == Message.VOTEREQUEST:
