@@ -35,6 +35,31 @@ class ThreadWithKill(threading.Thread):
         self.killed = True
 
 
+
+
+# class candidate(threading.Thread):
+#     def run(self):
+#         mainthread = self
+#         for i in range (10):
+#             time.sleep(1)
+#             print("runnning")
+#
+#     def fuck(self):
+#
+#
+#
+#
+# class follower(threading.Thread):
+#     def run(self):
+#
+#         for i in range (10):
+#             time.sleep(1)
+#             print("runnning")
+#
+#     def fuck(self):
+#
+#         for _ in range(2):
+#             print("fu")
 # def func1(a):
 #     while True:
 #         print(a)
@@ -45,13 +70,21 @@ class ThreadWithKill(threading.Thread):
 # t1 = ThreadWithKill(target=func1, args=("Thread 1",))
 # t2 = ThreadWithKill(target=func2, args=("Thread 2",))
 #
-# t1.start()
-# t2.start()
 #
-# t1.kill()
+# # t1.start()
+# # t2.start()
+#
+# publisht.run()
+# publisht.fuck()
+#
+#
+# # t1.kill()
 #
 # for i in range(5000):
 #     i += 1
 #     i *= 2
 # t2.kill()
+#
+#
+
 

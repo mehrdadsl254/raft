@@ -8,6 +8,10 @@ from Messages.VoteRequest import VoteRequest
 from Messages.VoteResponse import VoteResponse
 from Messages.base import Message
 from ThreadingWithKill import ThreadWithKill
+from States.Follower import Follower
+from States.Candidate import Candidate
+from States.Leader import Leader
+
 class Server(object):
 
     def __init__(self, Id, neighbors, port=5000, addTimeout=1):
@@ -36,53 +40,64 @@ class Server(object):
         self._timeoutCheckerThread = None
         self._messageHandler()
         self._currentState = self.FOLLOWER
-        self._mainWorkerThread = self._stateWorker()
-        self._newWorkerThread = None
 
-    def _stateWorker(self):
-        if self._currentState == self.FOLLOWER:
-            newWorkerThread = ThreadWithKill(target=self._follower)
-            newWorkerThread.start()
-            return newWorkerThread
-        elif self._currentState == self.CANDIDATE:
-            newWorkerThread = ThreadWithKill(target=self._candidate)
-            newWorkerThread.start()
-            return newWorkerThread
-        elif self._currentState == self.LEADER:
-            newWorkerThread = ThreadWithKill(target=self._leader)
-            newWorkerThread.start()
-            return newWorkerThread
+        self._follower = Follower(self)
+        self._follower.start()
+        self._candidate = Candidate(self)
+        self._leader = Leader(self)
 
-    def _follower(self):
-        self._timeout[0] = self._nextTimeout()
-        self._timoutHandler()
 
-    def _candidate(self):
-        if self._timeoutCheckerThread is not None:
-            self._killTimeoutChecker()
-        if self._mainWorkerThread is not None:
-            self._mainWorkerThread.kill()
-        self._mainWorkerThread = self._newWorkerThread
-        self._newWorkerThread = None
 
-        self._currentTerm = self._currentTerm + 1
-        self._votedFor = self._id
-        self._votesReceived = {self._id}
-        self._lastTerm = 0
-        if len(self._log) > 0:
-            self._lastTerm = self._log[-1].term
 
-        for n in self._neighbors:
-            msg = VoteRequest(term=self._currentTerm, sender=self._id, receiver=n['id'],
-                              candidateId=self._id, candidateTerm=self._currentTerm,
-                              candidateLogLength=len(self._log), candidateLogTerm=self._lastTerm)
-            self._sendMessage(msg)
+        # self._mainWorkerThread = self._stateWorker()
+        # self._newWorkerThread = None
 
-        self._timeout[0] = self._nextTimeout()
-        self._timoutHandler()
 
-    def _leader(self):
-        pass
+
+    # def _stateWorker(self):
+    #     if self._currentState == self.FOLLOWER:
+    #         newWorkerThread = ThreadWithKill(target=self._follower)
+    #         newWorkerThread.start()
+    #         return newWorkerThread
+    #     elif self._currentState == self.CANDIDATE:
+    #         newWorkerThread = ThreadWithKill(target=self._candidate)
+    #         newWorkerThread.start()
+    #         return newWorkerThread
+    #     elif self._currentState == self.LEADER:
+    #         newWorkerThread = ThreadWithKill(target=self._leader)
+    #         newWorkerThread.start()
+    #         return newWorkerThread
+
+    # def _follower(self):
+    #     self._timeout[0] = self._nextTimeout()
+    #     self._timoutHandler()
+
+    # def _candidate(self):
+        # if self._timeoutCheckerThread is not None:
+        #     self._killTimeoutChecker()
+        # if self._mainWorkerThread is not None:
+        #     self._mainWorkerThread.kill()
+        # self._mainWorkerThread = self._newWorkerThread
+        # self._newWorkerThread = None
+        #
+        # self._currentTerm = self._currentTerm + 1
+        # self._votedFor = self._id
+        # self._votesReceived = {self._id}
+        # self._lastTerm = 0
+        # if len(self._log) > 0:
+        #     self._lastTerm = self._log[-1].term
+        #
+        # for n in self._neighbors:
+        #     msg = VoteRequest(term=self._currentTerm, sender=self._id, receiver=n['id'],
+        #                       candidateId=self._id, candidateTerm=self._currentTerm,
+        #                       candidateLogLength=len(self._log), candidateLogTerm=self._lastTerm)
+        #     self._sendMessage(msg)
+        #
+        # self._timeout[0] = self._nextTimeout()
+        # self._timoutHandler()
+
+    # def _leader(self):
+    #     pass
 
     def _nextTimeout(self):
         self._currentTime = time.time()
@@ -99,9 +114,10 @@ class Server(object):
                 is_timeout = True
                 # suspects leader has failed, or on election timeout
                 self._currentState = self.CANDIDATE
-                self._newWorkerThread = self._stateWorker()
+                self._candidate.start()
 
     def _killTimeoutChecker(self):
+        print("Killing timeout checker of node %d" % self._id)
         self._timeoutCheckerThread.kill()
         self._timeoutCheckerThread = None
 
@@ -116,7 +132,7 @@ class Server(object):
 
                 while True:
                     message = socket.recv()
-                    self._on_message(message.decode())
+                    self._onMessage(message.decode())
 
         class PublishThread(threading.Thread):
             def run(thread):
@@ -141,10 +157,16 @@ class Server(object):
     def _sendMessage(self, message):
         self._messageBoard.append(message.__bytes__())
 
-    def _on_message(self, message):
+    def _onMessage(self, message):
         message = Message.ConvertStringToMessage(message)
         if message._receiver == self._id:
-            print(f"Message received at {self._id} from {message._sender}")
+            if self._currentState == self.FOLLOWER:
+                self._follower.onMessage(message)
+            elif self._currentState == self.CANDIDATE:
+                self._candidate.onMessage(message)
+            elif self._currentState == self.LEADER:
+                self._leader.onMessage(message)
+
 
 
 
