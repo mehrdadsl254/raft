@@ -1,27 +1,23 @@
 import time
 import threading
+import server
 
-def timeoutChecker(timeout, flag):
-    while True:
-        if time.time() > timeout[0]:
-            print("Timeout")
-            flag[0] = False
-            break
+server1 = server.Server(1, [{'id': 2, 'port': 5556}, {'id': 3, 'port': 5001}, {'id': 4, 'port': 5557}], 5000)
+server2 = server.Server(2, [{'id': 1, 'port': 5000}, {'id': 3, 'port': 5001}, {'id': 4, 'port': 5557}], 5556)
 
+server1.messageHandler()
+server2.messageHandler()
 
-def counter(flag):
-    count = 0
-    while flag[0]:
-        print(count)
-        count += 1
+time.sleep(1)
+time.sleep(3)
 
 
-_timeout = [0]
-_timeout[0] = time.time() + 1
-flag = [True]
-timeoutchecke = threading.Thread(target=timeoutChecker, args=(_timeout, flag,))
-t1 = threading.Thread(target=counter, args=(flag,))
-timeoutchecke.start()
-t1.start()
+server1.sendMessage(b"Hello from 1")
+server2.sendMessage(b"Hello from 2")
+
+server1.sendMessage(b"Hello again from 1")
+server2.sendMessage(b"Hello again from 2")
+
+
 
 
