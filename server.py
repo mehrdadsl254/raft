@@ -39,17 +39,6 @@ class Server(object):
         self._mainWorkerThread = self._stateWorker()
         self._newWorkerThread = None
 
-
-    def _timoutHandler(self):
-        self._timeoutCheckerThread = ThreadWithKill(target=self.timeoutChecker, args=(self._timeout,))
-        self._timeoutCheckerThread.start()
-
-    def _killTimeoutChecker(self):
-        self._timeoutCheckerThread.kill()
-        # self._timeoutCheckerThread.join()
-        self._timeoutCheckerThread = None
-
-
     def _stateWorker(self):
         if self._currentState == self.FOLLOWER:
             newWorkerThread = ThreadWithKill(target=self._follower)
@@ -68,18 +57,13 @@ class Server(object):
         self._timeout[0] = self._nextTimeout()
         self._timoutHandler()
 
-    def _leader(self):
-        pass
-
     def _candidate(self):
         if self._timeoutCheckerThread is not None:
             self._killTimeoutChecker()
         if self._mainWorkerThread is not None:
             self._mainWorkerThread.kill()
-            # self._mainWorkerThread.join()
         self._mainWorkerThread = self._newWorkerThread
         self._newWorkerThread = None
-
 
         self._currentTerm = self._currentTerm + 1
         self._votedFor = self._id
@@ -89,27 +73,37 @@ class Server(object):
             self._lastTerm = self._log[-1].term
 
         for n in self._neighbors:
-            msg = VoteRequest(term = self._currentTerm, sender = self._id, receiver = n['id'],
-                              candidateId = self._id, candidateTerm = self._currentTerm,
-                              candidateLogLength = len(self._log), candidateLogTerm = self._lastTerm)
+            msg = VoteRequest(term=self._currentTerm, sender=self._id, receiver=n['id'],
+                              candidateId=self._id, candidateTerm=self._currentTerm,
+                              candidateLogLength=len(self._log), candidateLogTerm=self._lastTerm)
             self._sendMessage(msg)
 
         self._timeout[0] = self._nextTimeout()
         self._timoutHandler()
+
+    def _leader(self):
+        pass
+
+    def _nextTimeout(self):
+        self._currentTime = time.time()
+        return self._currentTime + random.randrange(self._addTimeout, 2 * self._addTimeout)
+
+    def _timoutHandler(self):
+        self._timeoutCheckerThread = ThreadWithKill(target=self.timeoutChecker, args=(self._timeout,))
+        self._timeoutCheckerThread.start()
 
     def timeoutChecker(self, timeout):
         is_timeout = False
         while not is_timeout:
             if time.time() > timeout[0]:
                 is_timeout = True
-                print(f"Timeout at {self._id}")
                 # suspects leader has failed, or on election timeout
                 self._currentState = self.CANDIDATE
                 self._newWorkerThread = self._stateWorker()
 
-    def _nextTimeout(self):
-        self._currentTime = time.time()
-        return self._currentTime + random.randrange(self._addTimeout, 2 * self._addTimeout)
+    def _killTimeoutChecker(self):
+        self._timeoutCheckerThread.kill()
+        self._timeoutCheckerThread = None
 
     def _messageHandler(self):
         class SubscribeThread(threading.Thread):

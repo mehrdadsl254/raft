@@ -32,9 +32,7 @@ class ThreadWithKill(threading.Thread):
         return self.localtrace
 
     def kill(self):
-        print(f"bbbThread killed at {self.ident}")
         self.killed = True
-        print(f"Thread killed at {self.ident}")
 
 
 # def func1(a):
