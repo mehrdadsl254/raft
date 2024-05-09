@@ -2,6 +2,12 @@ import time
 import threading
 import random
 import zmq
+from Messages.LogRequest import LogRequest
+from Messages.LogResponse import LogResponse
+from Messages.VoteRequest import VoteRequest
+from Messages.VoteResponse import VoteResponse
+from Messages.base import Message
+
 class Server(object):
 
     def __init__(self, Id, neighbors,port=5000):
@@ -74,7 +80,7 @@ class Server(object):
 
                 while True:
                     message = socket.recv()
-                    print(f"{self._id} received: {message}")
+                    self._on_message(message.decode())
 
         class PublishThread(threading.Thread):
             def run(thread):
@@ -96,10 +102,13 @@ class Server(object):
         # self.publishThread.daemon = True
         self.publishThread.start()
 
-    def sendMessage(self, message):
-        self._messageBoard.append(message)
+    def _sendMessage(self, message):
+        self._messageBoard.append(message.__bytes__())
 
-
+    def _on_message(self, message):
+        message = Message.ConvertStringToMessage(message)
+        if message._receiver == self._id:
+            print(f"{self._id} received message: {message}")
 
 
 server = Server(1, [2, 3, 4])

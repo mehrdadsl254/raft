@@ -1,5 +1,4 @@
 import time
-import threading
 import server
 
 server1 = server.Server(1, [{'id': 2, 'port': 5556}, {'id': 3, 'port': 5001}, {'id': 4, 'port': 5557}], 5000)

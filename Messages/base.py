@@ -1,7 +1,3 @@
-from .logRequest import LogRequest
-from .logResponse import LogResponse
-from .voteRequest import VoteRequest
-from .voteResponse import VoteResponse
 
 class Message:
 
@@ -21,8 +17,17 @@ class Message:
         return str(self._type) + " " + str(self._term) + " " + str(self._sender) + " " + str(self._receiver)
 
 
+    def __bytes__(self):
+        return str(self).encode()
+
     @staticmethod
     def ConvertStringToMessage(messageString):
+
+        from Messages.LogRequest import LogRequest
+        from Messages.LogResponse import LogResponse
+        from Messages.VoteRequest import VoteRequest
+        from Messages.VoteResponse import VoteResponse
+
         message = messageString.split(" ")
         if int(message[0]) == Message.VOTEREQUEST:
             return VoteRequest.ConvertStringToMessage(messageString)
@@ -32,10 +37,5 @@ class Message:
             return LogRequest.ConvertStringToMessage(messageString)
         else:
             return LogResponse.ConvertStringToMessage(messageString)
-
-
-
-
-
 
 

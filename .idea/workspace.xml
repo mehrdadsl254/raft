@@ -5,13 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfe5d829-a0fc-481d-8999-77d1f8cefdfd" name="Changes" comment="commited">
-      <change afterPath="$PROJECT_DIR$/Message/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Message/base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Message/logRequest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Message/logResponse.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Message/voteRequest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Message/voteResponse.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Messages/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/testMessage.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Message/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/sever_message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Message/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Message/logRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/LogRequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Message/logResponse.py" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/LogResponse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Message/testMessage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Message/voteRequest.py" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/VoteRequest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Message/voteResponse.py" beforeDir="false" afterPath="$PROJECT_DIR$/Messages/VoteResponse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test copy.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test copy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,12 +63,13 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\term6\os\raft\Message" />
+      <recent name="F:\term6\os\raft\test" />
       <recent name="F:\term6\os\raft" />
+      <recent name="F:\term6\os\raft\Message" />
       <recent name="F:\term6\os\raft\messages" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.base">
+  <component name="RunManager" selected="Python.sever_message">
     <configuration name="base" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="raft" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -85,7 +92,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="sever_message" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="raft" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -93,12 +100,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/sever_message.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -107,7 +114,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="server" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="raft" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -115,12 +122,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -129,7 +136,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="state" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="testMessage" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="raft" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -142,7 +149,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/state.py" />
+      <option name="SCRIPT_NAME" value="F:\term6\os\raft\test\testMessage.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -151,35 +158,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test.testMessage" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="raft" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Messages" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test.testMessage&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.sever_message" />
+        <item itemvalue="Python.test (1)" />
+        <item itemvalue="Python.testMessage" />
+        <item itemvalue="Python tests.Python tests for test.testMessage" />
         <item itemvalue="Python.base" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.server" />
-        <item itemvalue="Python.state" />
       </list>
     </recent_temporary>
   </component>
@@ -228,7 +228,7 @@
       <workItem from="1715193728679" duration="67000" />
       <workItem from="1715193820158" duration="68000" />
       <workItem from="1715193900616" duration="12593000" />
-      <workItem from="1715243226204" duration="8130000" />
+      <workItem from="1715243226204" duration="13931000" />
     </task>
     <task id="LOCAL-00001" summary="commited">
       <created>1715171962149</created>
@@ -279,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1715247398873</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="commited">
+      <created>1715252482523</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1715252482523</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -304,7 +311,11 @@
     <SUITE FILE_PATH="coverage/raft$message.coverage" NAME="message Coverage Results" MODIFIED="1715248783444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/raft$server.coverage" NAME="server Coverage Results" MODIFIED="1715200754274" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/raft$test.coverage" NAME="test Coverage Results" MODIFIED="1715248552501" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/raft$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1715256767708" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
     <SUITE FILE_PATH="coverage/raft$state.coverage" NAME="state Coverage Results" MODIFIED="1715195450989" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/raft$main.coverage" NAME="main Coverage Results" MODIFIED="1715244560660" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/raft$.coverage" NAME=" Coverage Results" MODIFIED="1715252603810" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Message" />
+    <SUITE FILE_PATH="coverage/raft$testMessage.coverage" NAME="testMessage Coverage Results" MODIFIED="1715256662693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/raft$sever_message.coverage" NAME="sever_message Coverage Results" MODIFIED="1715257435927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
   </component>
 </project>
