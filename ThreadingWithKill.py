@@ -36,15 +36,8 @@ class ThreadWithKill(threading.Thread):
 
 
 
-
-# class candidate(threading.Thread):
-#     def run(self):
-#         mainthread = self
-#         for i in range (10):
-#             time.sleep(1)
-#             print("runnning")
 #
-#     def fuck(self):
+#
 #
 #
 #
@@ -56,6 +49,7 @@ class ThreadWithKill(threading.Thread):
 #             time.sleep(1)
 #             print("runnning")
 #             self.fuck()
+#             print('fuck ended')
 #
 #     def fuck(self):
 #

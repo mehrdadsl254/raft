@@ -30,17 +30,19 @@ class Server(object):
         self._commitLength = 0
         self._currentTerm = 0
         self._currentLeader = None
-        self._votesReceived = []
-        self._sentLength = []
-        self._ackedLength = []
-        self._lastTerm = 0
+        self._votesReceived = set()
+        self._sentLength = [0 for _ in range(len(neighbors)+1)]
+        self._ackedLength = [0 for _ in range(len(neighbors)+1)]
+        self._lastLogTerm = 0
         self._addTimeout = addTimeout
         self._timeout = [0]
         self._timeout[0] = time.time()
         self._timeoutCheckerThread = None
+        self._continueTimeoutHandler = False
         self._messageHandler()
+        self._freezeTimer = False
+        self._majority = (len(self._neighbors) + 1) // 2 + 1
         self._currentState = self.FOLLOWER
-
         self._follower = Follower(self)
         self._follower.start()
         self._candidate = Candidate(self)
@@ -48,13 +50,16 @@ class Server(object):
 
 
 
+    def _cancelTimer(self):
+        self._continueTimeoutHandler = False
+
     def _heartbeatHandler(self):
         threading.Thread(target=self._heartbeat).start()
 
 
     def _heartbeat(self):
         while self._currentState == self.LEADER:
-            time.sleep(1)
+            time.sleep(0.1)
             for n in self._neighbors:
                 self._leader._replicateLog(leaderId=self._id, followerId=n['id'])
 
@@ -113,20 +118,24 @@ class Server(object):
 
     def _nextTimeout(self):
         self._currentTime = time.time()
-        return self._currentTime + random.randrange(self._addTimeout, 2 * self._addTimeout)
+        self._timeout[0] = self._currentTime + self._addTimeout * random.random() + self._addTimeout
+    def _nextElectionTimeout(self, electionTime=2):
+        self._currentTime = time.time()
+        self._timeout[0] = self._currentTime + electionTime
 
-    def _timoutHandler(self):
+    def _timeoutHandler(self):
+        self._continueTimeoutHandler = True
         self._timeoutCheckerThread = ThreadWithKill(target=self.timeoutChecker, args=(self._timeout,))
         self._timeoutCheckerThread.start()
 
     def timeoutChecker(self, timeout):
-        is_timeout = False
-        while not is_timeout:
-            if time.time() > timeout[0]:
-                is_timeout = True
-                # suspects leader has failed, or on election timeout
-                self._currentState = self.CANDIDATE
-                self._candidate.start()
+        while self._continueTimeoutHandler:
+            if not self._freezeTimer:
+                if time.time() > timeout[0]:
+                    self._cancelTimer()
+                    # suspects leader has failed, or on election timeout
+                    self._currentState = self.CANDIDATE
+                    self._candidate.start()
 
     def _killTimeoutChecker(self):
         print("Killing timeout checker of node %d" % self._id)
@@ -173,15 +182,22 @@ class Server(object):
         message = Message.ConvertStringToMessage(message)
         if message._receiver == self._id:
             if self._currentState == self.FOLLOWER:
-                self._follower.onMessage(message)
+                self._follower._onMessage(message)
             elif self._currentState == self.CANDIDATE:
-                self._candidate.onMessage(message)
+                self._candidate._onMessage(message)
             elif self._currentState == self.LEADER:
-                self._leader.onMessage(message)
+                self._leader._onMessage(message)
 
 
-
-
+    def _broadcast(self, record):
+        if self._currentState == self.LEADER:
+            self._log.append({'term': self._currentTerm, 'msg': record})
+            self._ackedLength[self._id] = len(self._log)
+            # for each follower ∈ nodes \ {nodeId} do
+            for n in self._neighbors:
+                self._leader._replicateLog(leaderId=self._id, followerId=n['id'])
+        else:
+            pass
 
 
 

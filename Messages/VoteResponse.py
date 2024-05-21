@@ -8,10 +8,13 @@ class VoteResponse(Message):
         self._granted = granted
 
     def __str__(self):
-        return super().__str__() + " " + str(self._voterId) + " " + str(self._granted)
+        return super().__str__() + "+" + str(self._voterId) + "+" + str(self._granted)
+
+    def __bytes__(self):
+        return str(self).encode()
 
     @staticmethod
     def ConvertStringToMessage(messageString):
-        message = messageString.split(" ")
+        message = messageString.split("+")
         return VoteResponse(int(message[1]), int(message[2]), int(message[3]), int(message[4]), bool(message[5]))
 
