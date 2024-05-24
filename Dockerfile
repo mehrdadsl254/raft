@@ -12,4 +12,4 @@ COPY . .
 RUN useradd -m app
 USER app
 
-CMD ["python", "./test/all.py"]
+CMD ["python", "all.py"]

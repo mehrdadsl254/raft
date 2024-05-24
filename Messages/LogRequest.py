@@ -18,6 +18,7 @@ class LogRequest(Message):
 
     @staticmethod
     def ConvertStringToMessage(messageString):
+        # print(messageString)
         message = messageString.split("+")
 
         def convertStringToListOfDicts(string):

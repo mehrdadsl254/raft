@@ -20,12 +20,14 @@ class Server(object):
         self.CANDIDATE = 1
         self.LEADER = 2
 
+        self._myclient = self.connectToDatabase()
+
         self._port = port
         self._id = Id
         self._log = []
         self._messageBoard = []
         self._neighbors = neighbors
-        self._total_nodes = 0
+        # self._total_nodes = 0
         self._votedFor = None
         self._commitLength = 0
         self._currentTerm = 0
@@ -39,16 +41,88 @@ class Server(object):
         self._timeout[0] = time.time()
         self._timeoutCheckerThread = None
         self._continueTimeoutHandler = False
-        self._messageHandler()
         self._freezeTimer = False
         self._majority = (len(self._neighbors) + 1) // 2 + 1
+
+        self._reStoreServer()
+
         self._currentState = self.FOLLOWER
         self._follower = Follower(self)
         self._follower.start()
         self._candidate = Candidate(self)
         self._leader = Leader(self)
+        self._messageHandler()
+        self._storeHandler()
 
 
+    def connectToDatabase(self):
+        from pymongo.mongo_client import MongoClient
+        from pymongo.server_api import ServerApi
+
+        uri = "mongodb+srv://Mehrdad254:mehrdad254@cluster0.dsk9myw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+        # Create a new client and connect to the server
+        myclient = MongoClient(uri, server_api=ServerApi('1'))
+
+        try:
+            myclient.admin.command('ping')
+            print("Pinged your deployment. You successfully connected to MongoDB!")
+        except Exception as e:
+            print(e)
+
+        return myclient
+
+    def _reStoreServer(self):
+        mydb = self._myclient[f"ServerDataBase{self._id}"]
+        logCol = mydb["RestoreLogs"]
+        propCol = mydb["RestoreProperties"]
+        prop = propCol.find_one()
+        if prop is None:
+            return
+
+        self._currentTerm = prop['currentTerm']
+        self._commitLength = prop['commitLength']
+        self._lastLogTerm = prop['lastLogTerm']
+        self._ackedLength = prop['ackedLength']
+        self._sentLength = prop['sentLength']
+
+        for x in logCol.find():
+            del x['_id']
+            self._log.append(x)
+            print(x)
+
+        print(self._log)
+        print('term',self._currentTerm)
+
+    def _storeHandler(self):
+        class StoringThread(threading.Thread):
+            def run(thread):
+                while True:
+                    time.sleep(5)
+                    self._storeServer()
+
+        self.StoringThread = StoringThread()
+        self.StoringThread.start()
+
+
+    def _storeServer(self):
+        mydb = self._myclient[f"ServerDataBase{self._id}"]
+        logCol = mydb["RestoreLogs"]
+        propCol = mydb["RestoreProperties"]
+        if propCol.find_one() is not None:
+            propCol.delete_one({})
+        if logCol.find_one() is not None:
+            logCol.delete_many({})
+        for log in self._log:
+            logc = log.copy()
+            logCol.insert_one(logc)
+        propCol.insert_one({
+            'currentTerm': self._currentTerm,
+            'commitLength': self._commitLength,
+            'lastLogTerm': self._lastLogTerm,
+            'ackedLength': self._ackedLength,
+            'sentLength': self._sentLength
+        })
 
     def _cancelTimer(self):
         self._continueTimeoutHandler = False
@@ -65,56 +139,6 @@ class Server(object):
 
 
 
-
-        # self._mainWorkerThread = self._stateWorker()
-        # self._newWorkerThread = None
-
-
-
-    # def _stateWorker(self):
-    #     if self._currentState == self.FOLLOWER:
-    #         newWorkerThread = ThreadWithKill(target=self._follower)
-    #         newWorkerThread.start()
-    #         return newWorkerThread
-    #     elif self._currentState == self.CANDIDATE:
-    #         newWorkerThread = ThreadWithKill(target=self._candidate)
-    #         newWorkerThread.start()
-    #         return newWorkerThread
-    #     elif self._currentState == self.LEADER:
-    #         newWorkerThread = ThreadWithKill(target=self._leader)
-    #         newWorkerThread.start()
-    #         return newWorkerThread
-
-    # def _follower(self):
-    #     self._timeout[0] = self._nextTimeout()
-    #     self._timoutHandler()
-
-    # def _candidate(self):
-        # if self._timeoutCheckerThread is not None:
-        #     self._killTimeoutChecker()
-        # if self._mainWorkerThread is not None:
-        #     self._mainWorkerThread.kill()
-        # self._mainWorkerThread = self._newWorkerThread
-        # self._newWorkerThread = None
-        #
-        # self._currentTerm = self._currentTerm + 1
-        # self._votedFor = self._id
-        # self._votesReceived = {self._id}
-        # self._lastTerm = 0
-        # if len(self._log) > 0:
-        #     self._lastTerm = self._log[-1].term
-        #
-        # for n in self._neighbors:
-        #     msg = VoteRequest(term=self._currentTerm, sender=self._id, receiver=n['id'],
-        #                       candidateId=self._id, candidateTerm=self._currentTerm,
-        #                       candidateLogLength=len(self._log), candidateLogTerm=self._lastTerm)
-        #     self._sendMessage(msg)
-        #
-        # self._timeout[0] = self._nextTimeout()
-        # self._timoutHandler()
-
-    # def _leader(self):
-    #     pass
 
     def _nextTimeout(self):
         self._currentTime = time.time()

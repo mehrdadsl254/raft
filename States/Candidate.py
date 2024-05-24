@@ -13,8 +13,7 @@ class Candidate(threading.Thread):
 
 
     def start(self):
-
-
+        print(f"Candidate{self.server._id} started")
         # print(self.server._currentTerm)
         # if self.server._timeoutCheckerThread is not None:
         #     self.server._killTimeoutChecker()

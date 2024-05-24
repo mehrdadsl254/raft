@@ -9,6 +9,7 @@ class Follower(threading.Thread):
     def __init__(self, server):
         self.server = server
     def start(self):
+        print(f"Follower{self.server._id} started")
         self.server._votesReceived = set()
         self.server._nextTimeout()
         self.server._timeoutHandler()
@@ -82,6 +83,7 @@ class Follower(threading.Thread):
         if logLength + len(entries) > len(self.server._log):
             for i in range(len(self.server._log) - logLength, len(entries)):
                 self.server._log.append(entries[i])
+                print("Appending entry: ", entries[i], " to log: ", self.server._id)
 
         if leaderCommit > self.server._commitLength:
             for i in range(self.server._commitLength, leaderCommit):

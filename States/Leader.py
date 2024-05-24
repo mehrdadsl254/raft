@@ -10,7 +10,7 @@ class Leader(threading.Thread):
         self.server = server
 
     def start(self):
-
+        print(f"Leader{self.server._id} started")
         self.server._heartbeatHandler()
 
     def _replicateLog(self, leaderId, followerId):
