@@ -14,7 +14,7 @@ class Message:
 
 
     def __str__(self):
-        return str(self._type) + " " + str(self._term) + " " + str(self._sender) + " " + str(self._receiver)
+        return str(self._type) + "+" + str(self._term) + "+" + str(self._sender) + "+" + str(self._receiver)
 
 
     def __bytes__(self):
@@ -28,14 +28,14 @@ class Message:
         from Messages.VoteRequest import VoteRequest
         from Messages.VoteResponse import VoteResponse
 
-        message = messageString.split(" ")
+        message = messageString.split("+")
         if int(message[0]) == Message.VOTEREQUEST:
             return VoteRequest.ConvertStringToMessage(messageString)
         elif int(message[0]) == Message.VOTERESPONSE:
             return VoteResponse.ConvertStringToMessage(messageString)
         elif int(message[0]) == Message.LOGREQUEST:
             return LogRequest.ConvertStringToMessage(messageString)
-        else:
+        elif int(message[0]) == Message.LOGRESPONSE:
             return LogResponse.ConvertStringToMessage(messageString)
 
 
